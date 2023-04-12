@@ -19,7 +19,8 @@ const init = function() {
                 'add a department',
                 'add a role',
                 'add an employee',
-                'update an employee role'
+                'update an employee role',
+                'exit'
             ],
         }
         ])
@@ -47,6 +48,9 @@ const init = function() {
                 break;
                 case 'update an employee role':
                     directoryChoice = updateEmployeeRole();
+                break;
+                case 'exit':
+                    directoryChoice = process.exit();
                 break;
             }
         })

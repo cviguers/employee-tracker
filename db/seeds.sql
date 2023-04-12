@@ -4,7 +4,7 @@ VALUES ("Engineering"),
        ("Legal"),
        ("Sales"),
 
-INSERT INTO role (title, salary)
+INSERT INTO roles (title, salary)
 VALUES ("Sales Lead, 100000"),
        ("Salesperson, 80000"),
        ("Lead Engineer, 150000"),
@@ -14,7 +14,7 @@ VALUES ("Sales Lead, 100000"),
        ("Legal Team Lead, 250000"),
        ("Lawyer, 190000"),
 
-INSERT INTO role (first_name, last_name)
+INSERT INTO employees (first_name, last_name)
 VALUES ("John, Doe"),
        ("Mike, Chan"),
        ("Ashley, Rodrieguez"),
