@@ -26,4 +26,4 @@ function updateEmployeeRole() {
     // THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 };
 
-module.exports = { {viewDepartments, viewRoles, viewEmployees, addDepartments, addRole, addEmployee, updateEmployeeRole} }
+module.exports = { viewDepartments, viewRoles, viewEmployees, addDepartments, addRole, addEmployee, updateEmployeeRole }

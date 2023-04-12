@@ -1,15 +1,14 @@
 const Sequelize = require('sequelize');
 
-// Create a connection object
+// Enable access to .env variables
+require('dotenv').config();
+
+// Use environment variables to connect to database
 const sequelize = new Sequelize(
-  // Database name
-  'employee_db',
-  // User
-  'root',
-  // Password
-  'ScaryWords900!',
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
-    // Database location
     host: 'localhost',
     dialect: 'mysql',
     port: 3001
