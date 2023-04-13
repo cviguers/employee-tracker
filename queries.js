@@ -1,5 +1,5 @@
 // connect to database
-const sequelize = require('./config/connection');
+const sequelize = require('./config/connection.js');
 
 // function to view all departments
 async function viewDepartments() {
@@ -39,7 +39,7 @@ async function addDepartment() {
     db.query("INSERT INTO departments SET ?", departments);
     await db.query('INSERT INTO departments (department_name) VALUES (?)', [departmentName]);
 };
--
+
 // function to add a new role
 async function addRole() {
     // add additional prompt for user to input role info
