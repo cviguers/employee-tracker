@@ -1,55 +1,123 @@
 // connect to database
-const db = require('./config/connection.js');
+const sequelize = require('./config/connection');
 
-
-
-function viewDepartments() {
-    // sql query to view everything from departments table
-    db.query(`SELECT * FROM departments`);
+// function to view all departments
+async function viewDepartments() {
+    // call connection to database
+    const db = await mysql.createConnection(sequelize);
+    // sql query to select everything from departments table
+    const [rows] = await db.query('SELECT * FROM departments');
+    // use console table dependency to display rows in console
+    console.table(rows);
 };
 
-function viewRoles() {
-    // sql query to view everything from roles table
-    db.query(
-    `SELECT roles.id, roles.title, roles.salary departments.departments_name AS departments
-    
-    FROM roles
-    
-    LEFT JOIN departments ON roles.department_id = departments.id`);
+// function to view all roles
+async function viewRoles() {
+    const db = await mysql.createConnection(sequelize);
+    const [rows] = await db.query('SELECT * FROM roles');
+    console.table(rows);
 };
 
-function viewEmployees() {
-    // sql query to view everything from employees table
-    db.query(
-    `SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.department_name AS departments, roles.salary,
-    
-    CONCAT(manager.first_name, ' ', manager.last_name) AS manager
-    
-    FROM employees,
-    
-    LEFT JOIN roles ON employees.roles_id = roles.id
-    
-    LEFT JOIN departments ON roles.department_id = departments.departments_id
-
-    LEFT JOIN employees manager ON employees.manager_id = manager.id;`);
+// function to view all employees
+async function viewEmployees() {
+    const db = await mysql.createConnection(sequelize);
+    const [rows] = await db.query('SELECT * FROM employees');
+    console.table(rows);
 };
 
-function addDepartments(department) {
-    db.query("INSERT INTO department SET ?", department);
+// function to add a new department
+async function addDepartment() {
+    // add additional prompt for user to input dept info
+    const { departmentName } = await inquirer.prompt([
+        {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter new department name:',
+        },
+    ]);
+    // query to add new department to departments table
+    db.query("INSERT INTO departments SET ?", departments);
+    await db.query('INSERT INTO departments (department_name) VALUES (?)', [departmentName]);
+};
+-
+// function to add a new role
+async function addRole() {
+    // add additional prompt for user to input role info
+    const { title, salary, departmentID } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'title',
+      message: 'Enter new role title:',
+    },
+    {
+      type: 'input',
+      name: 'salary',
+      message: 'Enter new role salary:',
+    },
+    {
+      type: 'input',
+      name: 'departmentID',
+      message: 'Enter new department ID for role:',
+    },
+    ]);
+    // query to add new role info into roles table
+    db.query("INSERT INTO roles SET ?", roles);
+    await db.query('INSERT INTO roles (title, department_id, salary) VALUES (?, ?, ?)', [title, salary, departmentID]);
+    console.log('New role added.');
 };
 
-function addRole(role) {
-    db.query("INSERT INTO role SET ?", role);
+async function addEmployee() {
+    // add additional prompt for user to input employee info
+    const { firstName, lastName, roleID, managerID } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'firstName',
+          message: "Enter new employee's first name: ",
+        },
+        {
+          type: 'input',
+          name: 'lastName',
+          message: "Enter new employee's last name: ",
+        },
+        {
+          type: 'input',
+          name: 'roleID',
+          message: "Enter new employee's role ID: ",
+        },
+        {
+          type: 'input',
+          name: 'managerID',
+          message: "Enter new employee's manager ID (leave blank if none): ",
+        },
+      ]);
+    // query to add new employee info into employees table
+    db.query("INSERT INTO employees SET ?", employees);
+    await connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [
+        firstName,
+        lastName,
+        roleID,
+        managerID || null,
+    ]);
+    console.log('Added new employee');
 };
 
-function addEmployee(employee) {
-    db.query("INSERT INTO employee SET ?", employee);
+async function updateEmployeeRole() {
+    // add additional prompt for user to add details about role update
+    const { employeeID, roleID } = await inquirer.prompt([
+        {
+        type: 'input',
+        name: 'employeeId',
+        message: 'Enter the employee ID you want to update:',
+        },
+        {
+        type: 'input',
+        name: 'newRoleId',
+        message: 'Enter the new role ID for the employee:',
+        },
+    ]);
+    // query to add eupdate employee info into employees table
+    db.query( "UPDATE employees SET roles_id = ? WHERE id = ?", [employeeID, roleID]);
+    console.log('Updated employee role.');
 };
 
-function updateEmployeeRole(roleID, employeeID) =>
-    db.query(
-      "UPDATE employees SET roles_id = ? WHERE id = ?",
-      [roleID, employeeID]
-    );
-
-module.exports = { viewDepartments, viewRoles, viewEmployees, addDepartments, addRole, addEmployee, updateEmployeeRole }
+module.exports = { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole }

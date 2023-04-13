@@ -1,12 +1,13 @@
 // include packages and files needed for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
-const {viewDepartments, viewRoles, viewEmployees, addDepartments, addRole, addEmployee, updateEmployeeRole} = require('./utils/directory');
+const sequelize = require('./config/connection');
+const {viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole} = require('./utils/directory');
 
 
-const init = function() {
-    // array of questions for user input
-    inquirer
+async function init () {
+    // prompting user question object
+    await inquirer
         .prompt([
         {
             type: 'list',
@@ -29,6 +30,7 @@ const init = function() {
             let directoryChoice = data.directory;
             switch(directory) {
                 case 'view all departments':
+                    console.log('viewing departments')
                     directoryChoice = viewDepartments();
                 break;
                 case 'view all roles':
@@ -38,13 +40,15 @@ const init = function() {
                     directoryChoice = viewEmployees();
                 break;
                 case 'add a department':
-                    directoryChoice = addDepartments();
+                    directoryChoice = addDepartment();
+
                 break;
                 case 'add a role':
                     directoryChoice = addRole();
                 break;
                 case 'add an employee':
                     directoryChoice = addEmployee();
+                    
                 break;
                 case 'update an employee role':
                     directoryChoice = updateEmployeeRole();
