@@ -1,61 +1,60 @@
 // include packages and files needed for this application
-const fs = require("fs");
-const inquirer = require("inquirer");
-const {viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole} = require('./queries');
-
+const inquirer = require('inquirer');
+const mysql = require('mysql2/promise');
+const dotenv = require('dotenv').config();
+const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole,
+} = require('./lib/db.js')
 
 const directory = [
-        {
-            type: 'list',
-            name: 'directory',
-            message: 'What would you like to do?',
-            choices: [
-                'view all departments',
-                'view all roles',
-                'view all employees',
-                'add a department',
-                'add a role',
-                'add an employee',
-                'update an employee role',
-                'exit'
-            ],
-        }
+    {
+        type: 'list',
+        name: 'directory',
+        message: 'What would you like to do?',
+        choices: [
+            'view all departments',
+            'view all roles',
+            'view all employees',
+            'add a department',
+            'add a role',
+            'add an employee',
+            'update an employee role',
+            'exit'
+        ],
+    }
 ];
 
-async function init () {
+async function startQuestions () {
     // prompting user question object
-    await inquirer
+    inquirer
         .prompt(directory)
         .then((data) => {
             // dependent on directory choice, call corresponding function
             let directoryChoice = data.directory;
-            switch(directory) {
+            switch(directoryChoice) {
                 case 'view all departments':
                     console.log('viewing departments')
-                    directoryChoice = viewDepartments();
+                    viewDepartments();
                 break;
                 case 'view all roles':
-                    directoryChoice = viewRoles();
+                    viewRoles();
                 break;
                 case 'view all employees':
-                    directoryChoice = viewEmployees();
+                    viewEmployees();
                 break;
                 case 'add a department':
-                    directoryChoice = addDepartment();
+                    addDepartment();
                 break;
                 case 'add a role':
-                    directoryChoice = addRole();
+                    addRole();
                 break;
                 case 'add an employee':
-                    directoryChoice = addEmployee();
-                    
+                    addEmployee();
                 break;
                 case 'update an employee role':
-                    directoryChoice = updateEmployeeRole();
+                    updateEmployeeRole();
                 break;
                 case 'exit':
-                    directoryChoice = process.exit();
-                break;
+                    process.exit();
             }
         })
         // log errors, if any
@@ -64,5 +63,9 @@ async function init () {
         })
 }
 
+
 // call for app to begin
 init();
+async function init(){
+await startQuestions();
+}
