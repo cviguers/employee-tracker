@@ -5,14 +5,14 @@ Developers frequently have to create interfaces that allow non-developers to eas
 Because this Challenge will require the use of the Inquirer package, ensure that you install and use Inquirer version 8.2.4. To do so, use the following command in your project folder: npm i inquirer@8.2.4.
 Because this application won’t be deployed, you’ll also need to create a walkthrough video that demonstrates its functionality and all of the following acceptance criteria being met. You’ll need to submit a link to the video and add it to the README of your project.
 
-#User Story
+## User Story
 `
 AS A business owner
 I WANT to be able to view and manage the departments, roles, and employees in my company
 SO THAT I can organize and plan my business
 `
 
-#Acceptance Criteria
+## Acceptance Criteria
 `
 GIVEN a command-line application that accepts user input
 WHEN I start the application
@@ -33,10 +33,10 @@ WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 `
 
-# Usage
+## Usage
 To use this application, first clone the repo to your local machine. In your command line, run `npm i` to install all necessary dependencies included in the package.json. Look into the `server.js` file and ensure you have updated your own personal SQL information into the required fields. To run the application, send `node server.js` to the command line.
 <img src="./public/images/screenshot.png"/>
 
-#Access
-Walkthrough Video: https://drive.google.com/file/d/1qnO2YzchXGvcniEvIOBwgQ-4jNRk0d58/view
-Github Repo: https://github.com/cviguers/employee-tracker
+## Access
+* Walkthrough Video: https://drive.google.com/file/d/1qnO2YzchXGvcniEvIOBwgQ-4jNRk0d58/view
+* Github Repo: https://github.com/cviguers/employee-tracker
